@@ -20,10 +20,10 @@ public class TelegramComponent {
 
 	public void send(Message<String> message) {
 		TelegramMessage telegramMessage = new TelegramMessage();
-		telegramMessage.setChat_id("");
+		telegramMessage.setChat_id("65929604");
 		telegramMessage.setText(message.getPayload());
 		try {
-			telegramService.sendMessage("token", telegramMessage).execute();
+			telegramService.sendMessage(telegramMessage).execute();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

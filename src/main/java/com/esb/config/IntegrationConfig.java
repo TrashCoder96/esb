@@ -69,7 +69,7 @@ public class IntegrationConfig {
 	@Bean
 	public TelegramService telegramService() {
 		Retrofit retrofit = new Retrofit.Builder()
-				.baseUrl("https://api.telegram.org")
+				.baseUrl("https://api.telegram.org/bot242602246:AAEkJJ4UFTPFBp1z2S6o9RQAomofY70qMZ0/")
 				.addConverterFactory(JacksonConverterFactory.create())
 				.build();
 		return retrofit.create(TelegramService.class);
