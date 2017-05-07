@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-http="http://www.springframework.org/schema/integration/http"
+       xmlns:int-ws="http://www.springframework.org/schema/integration/ws"
+       xmlns:int-xml="http://www.springframework.org/schema/integration/xml"
+       xsi:schemaLocation="http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+        http://www.springframework.org/schema/integration/ws http://www.springframework.org/schema/integration/ws/spring-integration-ws.xsd
+        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/integration/xml http://www.springframework.org/schema/integration/xml/spring-integration-xml.xsd">
+
+
+	<int:channel id="mainQueueCnannel">
+		<int:queue capacity="100" />
+	</int:channel>
+
+	<int:channel id="outputSkypeChannel">
+		<int:queue capacity="100" />
+	</int:channel>
+
+	<int:channel id="outputVkChannel">
+		<int:queue capacity="100" />
+	</int:channel>
+
+	<int:channel id="outputTelergamChannel">
+		<int:queue capacity="100" />
+	</int:channel>
+
+	<!-- адаптер для просовывания сообщений из сетей в общий канал -->
+	<int:inbound-channel-adapter channel="mainQueueCnannel" ref="putComponent" method="send">
+		<int:poller max-messages-per-poll="1" fixed-rate="0" />
+	</int:inbound-channel-adapter>
+
+	<!--роутер для перенаправления сообщений на разные каналы отправки сообщений, в зависимости от того, чему равен заголовое channelType -->
+	<int:header-value-router input-channel="mainQueueCnannel" header-name="channelType">
+		<int:mapping value="skypeChannel" channel="outputSkypeChannel" />
+		<int:mapping value="vkChannel" channel="outputVkChannel" />
+		<int:mapping value="telegramChannel" channel="outputTelergamChannel" />
+	</int:header-value-router>
+
+	<int:outbound-channel-adapter channel="outputSkypeChannel" ref="skypeComponent" method="send">
+		<int:poller max-messages-per-poll="1" fixed-delay="0" />
+	</int:outbound-channel-adapter>
+
+	<int:outbound-channel-adapter channel="outputVkChannel" ref="vkComponent" method="send">
+		<int:poller max-messages-per-poll="1" fixed-delay="0" />
+	</int:outbound-channel-adapter>
+
+	<int:outbound-channel-adapter channel="outputTelergamChannel" ref="telegramComponent" method="send">
+		<int:poller max-messages-per-poll="1" fixed-delay="0" />
+	</int:outbound-channel-adapter>
+
+	<int:poller default="true" fixed-rate="10000" />
+
+</beans>
