@@ -24,14 +24,14 @@ public class PutComponent {
 					setHeader("channelType", ChannelType.SKYPE_CHANNEL).build();
 		}
 		if (i == 1) {
-			return MessageBuilder.withPayload("skype").
+			return MessageBuilder.withPayload("vk").
 					setHeader("channelType", ChannelType.VK_CHANNEL).build();
 		}
 		if (i == 2) {
-			return MessageBuilder.withPayload("skype").
+			return MessageBuilder.withPayload("telegram").
 					setHeader("channelType", ChannelType.TELEGRAM_CHANNEL).build();
 		}
-		return MessageBuilder.withPayload("skype").
+		return MessageBuilder.withPayload("telegram").
 				setHeader("channelType", ChannelType.TELEGRAM_CHANNEL).build();
 	}
 

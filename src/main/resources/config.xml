@@ -35,7 +35,7 @@
 		<int:poller max-messages-per-poll="1" fixed-rate="0" />
 	</int:inbound-channel-adapter>
 
-	<!--роутер для перенаправления сообщений на разные каналы отправки сообщений, в зависимости от того, чему равен заголовое channelType -->
+	<!--роутер для перенаправления сообщений на разные каналы отправки сообщений, в зависимости от того, чему равен заголовок channelType -->
 	<int:header-value-router input-channel="mainQueueCnannel" header-name="channelType">
 		<int:mapping value="skypeChannel" channel="outputSkypeChannel" />
 		<int:mapping value="vkChannel" channel="outputVkChannel" />

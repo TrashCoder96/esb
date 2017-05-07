@@ -7,8 +7,14 @@ import com.esb.component.VkComponent;
 import com.esb.rest.SkypeController;
 import com.esb.rest.TelegramController;
 import com.esb.rest.VkController;
+import com.esb.service.MicrosoftOnlineService;
+import com.esb.service.SkypeService;
+import com.esb.service.TelegramService;
+import com.esb.service.VkService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 /**
  * Created by itimofeev on 06.05.2017.
@@ -49,6 +55,42 @@ public class IntegrationConfig {
 	@Bean
 	public PutComponent putComponent() {
 		return new PutComponent();
+	}
+
+	@Bean
+	public SkypeService skypeService() {
+		Retrofit retrofit = new Retrofit.Builder()
+				.baseUrl("https://apis.skype.com")
+				.addConverterFactory(JacksonConverterFactory.create())
+				.build();
+		return retrofit.create(SkypeService.class);
+	}
+
+	@Bean
+	public TelegramService telegramService() {
+		Retrofit retrofit = new Retrofit.Builder()
+				.baseUrl("https://api.telegram.org")
+				.addConverterFactory(JacksonConverterFactory.create())
+				.build();
+		return retrofit.create(TelegramService.class);
+	}
+
+	@Bean
+	public VkService vkService() {
+		Retrofit retrofit = new Retrofit.Builder()
+				.baseUrl("https://api.vk.com/method/")
+				.addConverterFactory(JacksonConverterFactory.create())
+				.build();
+		return retrofit.create(VkService.class);
+	}
+
+	@Bean
+	public MicrosoftOnlineService microsoftOnlineService() {
+		Retrofit retrofit = new Retrofit.Builder()
+				.baseUrl("https://login.microsoftonline.com")
+				.addConverterFactory(JacksonConverterFactory.create())
+				.build();
+		return retrofit.create(MicrosoftOnlineService.class);
 	}
 
 }
