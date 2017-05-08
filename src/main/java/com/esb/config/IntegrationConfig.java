@@ -1,6 +1,5 @@
 package com.esb.config;
 
-import com.esb.component.PutComponent;
 import com.esb.component.SkypeComponent;
 import com.esb.component.TelegramComponent;
 import com.esb.component.VkComponent;
@@ -50,11 +49,6 @@ public class IntegrationConfig {
 	@Bean
 	public VkComponent vkComponent() {
 		return new VkComponent();
-	}
-
-	@Bean
-	public PutComponent putComponent() {
-		return new PutComponent();
 	}
 
 	@Bean

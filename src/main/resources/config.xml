@@ -24,11 +24,6 @@
 		<int:queue capacity="100" />
 	</int:channel>
 
-	<!-- адаптер для просовывания сообщений из сетей в общий канал -->
-	<int:inbound-channel-adapter channel="mainQueueCnannel" ref="putComponent" method="send">
-		<int:poller max-messages-per-poll="1" fixed-rate="0" />
-	</int:inbound-channel-adapter>
-
 	<!--роутер для перенаправления сообщений на разные каналы отправки сообщений, в зависимости от того, чему равен заголовок channelType -->
 	<int:header-value-router input-channel="mainQueueCnannel" header-name="channelType">
 		<int:mapping value="skypeChannel" channel="outputSkypeChannel" />
